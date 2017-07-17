@@ -102,6 +102,9 @@ section {
 .calc-body li button.no-left-border {
 	border-left: none;
 }
+.calc-body li button.rounded-left {
+	border-radius: 0 0 0 20px;
+}
 .left-panel-1 li button {
 	background-color: #F1E0FF;
 }
@@ -109,9 +112,13 @@ section {
   background: -webkit-linear-gradient(left top,    #FED035,#FF9559);
   background:      -o-linear-gradient(bottom right,#FED035,#FF9559);
   background:    -moz-linear-gradient(bottom right,#FED035,#FF9559);
-  background:      linear-gradient(to bottom right,#FED035,#FF9559); 
+  background:      linear-gradient(to bottom right,#FED035,#FF9559);
+	border-radius: 0 0 20px 0;
 }
 .right-panel li button {
 	background: transparent;
 	color: #fff;
+	font-size: 24px;
+	line-height: 40px;
+	font-weight: 300;
 }
