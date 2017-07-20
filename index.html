@@ -6,7 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
 
     <title>Javascript Calculator</title>
-  
+    
+    <link href="https://fonts.googleapis.com/css?family=Oswald|Roboto" rel="stylesheet">
     <link href="clear-all.css" rel="stylesheet">
     <link href="main.css" rel="stylesheet">
 
@@ -30,39 +31,40 @@
             <i class="dot"></i>
             <i class="dot"></i>
           </div>
-          <div class="calc-display">65 &times; 84</div>
-          <div class="calc-result">5460</div>
+          <div class="calc-display">0</div>
+          <div class="calc-result">0</div>
         </div>
         <div class="calc-body">
 
           <ul class="right-panel">
-            <li><button>&divide;</button></li>
-            <li><button>&times;</button></li>
-            <li><button>&minus;</button></li>
-            <li><button>+</button></li>
-            <li><button>=</button></li>
+            <li><button id="/" class="gocalc">&divide;</button></li>
+            <li><button id="*" class="gocalc">&times;</button></li>
+            <li><button id="-" class="gocalc">&minus;</button></li>
+            <li><button id="+" class="gocalc">+</button></li>
+            <li><button id="=" class="goresult">=</button></li>
           </ul>
           <ul class="left-panel-1">
-            <li><button class="no-left-border">AC</button></li>
-            <li><button>CE</button></li>
-            <li><button>%</button></li>
+            <li><button id="AC" class="no-left-border">AC</button></li>
+            <li><button id="CE">CE</button></li>
+            <li><button id="%">%</button></li>
           </ul>
           <ul class="left-panel-2">
-            <li><button class="no-left-border">7</button></li>
-            <li><button>8</button></li>
-            <li><button>9</button></li>
-            <li><button class="no-left-border">4</button></li>
-            <li><button>5</button></li>
-            <li><button>6</button></li>
-            <li><button class="no-left-border">1</button></li>
-            <li><button>2</button></li>
-            <li><button>3</button></li>
-            <li class="box-2"><button class="no-left-border rounded-left">0</button></li>
-            <li><button>.</button></li>
+            <li><button id="7" class="no-left-border">7</button></li>
+            <li><button id="8">8</button></li>
+            <li><button id="9">9</button></li>
+            <li><button id="4" class="no-left-border">4</button></li>
+            <li><button id="5">5</button></li>
+            <li><button id="6">6</button></li>
+            <li><button id="1" class="no-left-border">1</button></li>
+            <li><button id="2">2</button></li>
+            <li><button id="3">3</button></li>
+            <li class="box-2"><button id="0" class="no-left-border">0</button></li>
+            <li><button id=".">.</button></li>
           </ul>
         </div>
       </div>
     </section>
-
+    <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.slim.js"></script>
+    <script src="main.js"></script>
   </body>
 </html>
