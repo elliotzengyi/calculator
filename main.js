@@ -28,9 +28,9 @@ function setSymbol(s) {
         if (typeof(temp) !== "undefined") {
             second = Number(temp);
             getTotal();
+        		first = Number(temp);
+        		temp = undefined;
         }
-        first = Number(temp);
-        temp = undefined;
         symbol = s;
         
     } else {
