@@ -162,12 +162,12 @@ $(document).ready(function() {
         	}
         }
 
-        console.log([
+        /*console.log([
             "first: " + first + " " + typeof(first),
             "second: " + second + " " + typeof(second),
             "symbol: " + symbol,
             "temp: " + temp + " " + typeof(temp)
-        ]);
+        ]);*/
         $(".calc-display").html(display);
         $(".calc-result").html(result);
     }
