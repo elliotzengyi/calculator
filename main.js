@@ -1,7 +1,14 @@
 var first, second, symbol, temp;
+var afterCalc = false;
 var symbols = ["/", "*", "-", "+"];
 
 function setNum(n) {
+
+		if (afterCalc) { 
+			temp = undefined;
+			afterCalc = false;
+		}
+
     if (typeof(temp) === "undefined") {
         temp = n;
     } else {
@@ -15,18 +22,20 @@ function setNum(n) {
 
 function setSymbol(s) {
 
+		afterCalc = false;
+
     if (typeof(first) !== "undefined") {
         if (typeof(temp) !== "undefined") {
-            second = temp;
+            second = Number(temp);
             getTotal();
         }
-        first = temp;
+        first = Number(temp);
         temp = undefined;
         symbol = s;
         
     } else {
         if (typeof(temp) !== "undefined") {
-            first = temp;
+            first = Number(temp);
             temp = undefined;
             symbol = s;
         }
@@ -35,6 +44,12 @@ function setSymbol(s) {
 }
 
 function setDot() {
+
+		if (afterCalc) { 
+			temp = undefined;
+			afterCalc = false;
+		}
+
     if (typeof(temp) === "undefined") {
         temp = "0";
     }
@@ -101,6 +116,7 @@ function update() {
 
 function clearAll() {
     first = second = temp = symbol = undefined;
+    afterCalc = false;
 }
 
 function clearOne() {
@@ -120,7 +136,7 @@ function getTotal() {
     var result = 0;
 
     if (typeof(first) !== "undefined" && typeof(second) === "undefined" && typeof(temp) !== "undefined") {
-        second = temp;
+        second = Number(temp);
     }
 
     if (typeof(second) !== "undefined") {
@@ -141,6 +157,7 @@ function getTotal() {
 
         temp = result.toString();
         first = symbol = second = undefined;
+        afterCalc = true;
     }
 }
 
