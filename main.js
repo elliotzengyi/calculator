@@ -26,7 +26,12 @@ function setSymbol(s) {
 
     if (typeof(first) !== "undefined") {
         if (typeof(temp) !== "undefined") {
-            second = Number(temp);
+
+            if (temp.length > 10) {
+                second = Number(temp).toPrecision(10);
+            } else {
+                second = Number(temp);
+            }
             getTotal();
             first = Number(temp);
             temp = undefined;
@@ -35,7 +40,11 @@ function setSymbol(s) {
 
     } else {
         if (typeof(temp) !== "undefined") {
-            first = Number(temp);
+            if (temp.length > 10) {
+                first = Number(temp).toPrecision(10);
+            } else {
+                first = Number(temp);
+            }
             temp = undefined;
             symbol = s;
         }
@@ -156,10 +165,10 @@ function getTotal() {
                 break;
         }
 
-        if(result.toString().length > 10) {
-        	temp = result.toPrecision(10).toString();
+        if (result.toString().length > 10) {
+            temp = result.toPrecision(10).toString();
         } else {
-        	temp = result.toString();
+            temp = result.toString();
         }
 
         first = symbol = second = undefined;
