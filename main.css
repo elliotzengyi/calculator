@@ -166,8 +166,7 @@ button:active {
     }
     .calc-body li button {
     	height: 50px;
-    	font-size: 16px;
-    	line-height: 48px;
+    	line-height: 46px;
     }
 
 }

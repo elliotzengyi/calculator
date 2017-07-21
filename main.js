@@ -1,8 +1,11 @@
 var first, second, symbol, temp;
 var afterCalc = false;
 var symbols = ["/", "*", "-", "+"];
+var lastNum, lastSymbol;
 
 function setNum(n) {
+
+		lastNum = lastSymbol = undefined;
 
     if (afterCalc) {
         temp = undefined;
@@ -25,6 +28,7 @@ function setNum(n) {
 function setSymbol(s) {
 
     afterCalc = false;
+    lastNum = lastSymbol = undefined;
 
     if (typeof(first) !== "undefined") {
         if (typeof(temp) !== "undefined") {
@@ -57,6 +61,8 @@ function setDot() {
         afterCalc = false;
     }
 
+    lastNum = lastSymbol = undefined;
+
     if (typeof(temp) === "undefined") {
         temp = "0";
     }
@@ -66,6 +72,8 @@ function setDot() {
 }
 
 function setPercent() {
+		lastNum = lastSymbol = undefined;
+
     if (typeof(temp) !== "undefined") {
         temp = div(Number(temp), 100).toString();
     }
@@ -80,15 +88,15 @@ function update() {
 
     if (typeof(first) !== "undefined") {
 
-    		var firstDisplay = "";
+        var firstDisplay = "";
 
-    		if (first.length > 10) {
-    			firstDisplay = Number(first).toPrecision(10);
-    		} else {
-        	firstDisplay = first;
-    		}
+        if (first.length > 10) {
+            firstDisplay = Number(first).toPrecision(10);
+        } else {
+            firstDisplay = first;
+        }
 
-    		display += firstDisplay;
+        display += firstDisplay;
 
         if (typeof(temp) === "undefined") {
             result = firstDisplay;
@@ -119,16 +127,16 @@ function update() {
 
     if (typeof(temp) !== "undefined") {
 
-    		var tempDisplay = "";
+        var tempDisplay = "";
 
-    		if(temp.length > 10) {
-					tempDisplay = Number(temp).toPrecision(10);
-    		} else {
-        	tempDisplay = temp;
-    		}
+        if (temp.length > 10) {
+            tempDisplay = Number(temp).toPrecision(10);
+        } else {
+            tempDisplay = temp;
+        }
 
-    		display += tempDisplay;
-    		result = tempDisplay;
+        display += tempDisplay;
+        result = tempDisplay;
     }
 
     if (display === "") display = "0";
@@ -185,6 +193,9 @@ function getTotal() {
         }
 
         temp = result.toString();
+
+        lastNum = second;
+        lastSymbol = symbol;
 
         first = symbol = second = undefined;
         afterCalc = true;
@@ -257,6 +268,14 @@ $(document).ready(function() {
             clearOne();
             update();
         } else if (this.id === "=") {
+            if (typeof(lastNum) !== "undefined" &&
+                typeof(lastSymbol) !== "undefined") {
+                symbol = lastSymbol;
+                second = lastNum;
+            		first = temp;
+                temp = undefined;
+                console.log("再次计算" + first + symbol + second);
+            }
             getTotal();
             update();
         } else if (symbols.includes(this.id)) {
