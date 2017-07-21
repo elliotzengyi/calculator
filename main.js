@@ -119,7 +119,7 @@ function getTotal() {
 
     var result = 0;
 
-    if (typeof(second) === "undefined" && typeof(temp) !== "undefined") {
+    if (typeof(first) !== "undefined" && typeof(second) === "undefined" && typeof(temp) !== "undefined") {
         second = temp;
     }
 
