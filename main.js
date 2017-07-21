@@ -19,9 +19,11 @@ function setSymbol(s) {
         if (typeof(temp) !== "undefined") {
             second = temp;
             getTotal();
-        } else {
-            symbol = s;
         }
+        first = temp;
+        temp = undefined;
+        symbol = s;
+        
     } else {
         if (typeof(temp) !== "undefined") {
             first = temp;
@@ -98,17 +100,18 @@ function update() {
 }
 
 function clearAll() {
-    first = second = temp = undefined;
+    first = second = temp = symbol = undefined;
 }
 
 function clearOne() {
 
-    if (typeof(temp) !== undefined) {
+    if (typeof(temp) !== "undefined") {
         temp = undefined;
     } else if (typeof(second) !== "undefined") {
         second = undefined;
     } else if (typeof(first) !== "undefined") {
         first = undefined;
+        symbol = undefined;
     }
 }
 
