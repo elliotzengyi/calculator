@@ -101,6 +101,7 @@ section {
 	height: 60px;
 	font-size: 18px;
 	line-height: 56px;
+	transition: all 0.2s ease;
 }
 .calc-body li button.no-left-border {
 	border-left: none;
@@ -121,4 +122,8 @@ section {
 	font-size: 24px;
 	line-height: 40px;
 	font-weight: 300;
+}
+
+button:active {
+	background-color: #E67997 !important;
 }

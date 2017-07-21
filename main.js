@@ -1,43 +1,228 @@
-$(document).ready(function(){
+var first, second, symbol, temp;
+var symbols = ["/", "*", "-", "+"];
 
-	$(".left-panel-2 button").on("click", function(){
+function setNum(n) {
+    if (typeof(temp) === "undefined") {
+        temp = n;
+    } else {
+        if (n === "0" && temp === "0") {
+            temp = n;
+        } else {
+            temp += n;
+        }
+    }
+}
 
-	});
+function setSymbol(s) {
 
-	$(".gocalc").on("click", function(){
+    if (typeof(first) !== "undefined") {
+        if (typeof(temp) !== "undefined") {
+            second = temp;
+            getTotal();
+        } else {
+            symbol = s;
+        }
+    } else {
+        if (typeof(temp) !== "undefined") {
+            first = temp;
+            temp = undefined;
+            symbol = s;
+        }
+    }
 
-	});
+}
 
-	$(".goresult").on("click", function(){
+function setDot() {
+    if (typeof(temp) === "undefined") {
+        temp = "0";
+    }
+    if (temp.indexOf(".") === -1) {
+        temp += ".";
+    }
+}
 
-	});
+function setPercent() {
+    if (typeof(temp) !== "undefined") temp = div(temp, 100);
+    if (typeof(temp) === "undefined" && typeof(first) !== undefined) {
+    	first = div(first, 100);
+    }
+}
 
-	$(".left-panel-1 button").on("click", function(){
+function update() {
 
-		switch(this.id) {
-			case "AC":
+    var display = "";
+    var result = "0";
 
-		}
+    if (typeof(first) !== "undefined") {
+        display = first;
+        if (typeof(temp) === "undefined") {
+            result = first;
+        }
+    }
+    if (typeof(symbol) !== "undefined") {
+        var symbolString = "";
+        switch (symbol) {
+            case "/":
+                symbolString = "&divide;";
+                break;
+            case "*":
+                symbolString = "&times;";
+                break;
+            case "-":
+                symbolString = "&minus;";
+                break;
+            case "+":
+                symbolString = "+";
+                break;
+        }
+        display += " " + symbolString + " ";
+    }
 
-	});
+    if (typeof(second) !== "undefined") display += second;
 
-	function gocalc(a, b, c) {
+    if (typeof(temp) !== "undefined") {
+        display += temp;
+        result = temp;
+    }
 
-		switch (c) {
-			case "/":
-				result = a / b;
-				break;
-			case "*":
-				result = a * b;
-				break;
-			case "-":
-				result = a - b;
-				break;
-			case "+":
-				result = a + b;
-				break;
-		}
+    if (display === "") display = "0";
 
-	}
+    console.log([
+        "first: " + first,
+        "second: " + second,
+        "symbol: " + symbol,
+        "temp: " + temp
+    ]);
+    $(".calc-display").html(display);
+    $(".calc-result").html(result);
+}
+
+function clearAll() {
+    first = second = temp = undefined;
+}
+
+function clearOne() {
+
+    if (typeof(temp) !== undefined) {
+        temp = undefined;
+    } else if (typeof(second) !== "undefined") {
+        second = undefined;
+    } else if (typeof(first) !== "undefined") {
+        first = undefined;
+    }
+}
+
+function getTotal() {
+
+    var result = 0;
+
+    if (typeof(second) === "undefined" && typeof(temp) !== "undefined") {
+        second = temp;
+    }
+
+    if (typeof(second) !== "undefined") {
+        switch (symbol) {
+            case "/":
+                result = div(first, second);
+                break;
+            case "*":
+                result = mul(first, second);
+                break;
+            case "-":
+                result = sub(first, second);
+                break;
+            case "+":
+                result = add(first, second);
+                break;
+        }
+
+        temp = result.toString();
+        first = symbol = second = undefined;
+    }
+}
+
+function add(a, b) {
+    var c, d, e;
+    try {
+        c = a.toString().split(".")[1].length;
+    } catch (f) {
+        c = 0;
+    }
+    try {
+        d = b.toString().split(".")[1].length;
+    } catch (f) {
+        d = 0;
+    }
+    return e = Math.pow(10, Math.max(c, d)), (mul(a, e) + mul(b, e)) / e;
+}
+
+function sub(a, b) {
+    var c, d, e;
+    try {
+        c = a.toString().split(".")[1].length;
+    } catch (f) {
+        c = 0;
+    }
+    try {
+        d = b.toString().split(".")[1].length;
+    } catch (f) {
+        d = 0;
+    }
+    return e = Math.pow(10, Math.max(c, d)), (mul(a, e) - mul(b, e)) / e;
+}
+
+function mul(a, b) {
+    var c = 0,
+        d = a.toString(),
+        e = b.toString();
+    try {
+        c += d.split(".")[1].length;
+    } catch (f) {}
+    try {
+        c += e.split(".")[1].length;
+    } catch (f) {}
+    return Number(d.replace(".", "")) * Number(e.replace(".", "")) / Math.pow(10, c);
+}
+
+function div(a, b) {
+    var c, d, e = 0,
+        f = 0;
+    try {
+        e = a.toString().split(".")[1].length;
+    } catch (g) {}
+    try {
+        f = b.toString().split(".")[1].length;
+    } catch (g) {}
+    return c = Number(a.toString().replace(".", "")), d = Number(b.toString().replace(".", "")), mul(c / d, Math.pow(10, f - e));
+}
+
+$(document).ready(function() {
+
+    $("button").on("click", function() {
+
+        if (this.id === "AC") {
+            clearAll();
+            update();
+        } else if (this.id === "CE") {
+            clearOne();
+            update();
+        } else if (this.id === "=") {
+            getTotal();
+            update();
+        } else if (symbols.includes(this.id)) {
+            setSymbol(this.id);
+            update();
+        } else if (this.id === ".") {
+            setDot();
+            update();
+        } else if (this.id === "%") {
+            setPercent();
+            update();
+        } else {
+            setNum(this.id);
+            update();
+        }
+
+    });
 
 });
