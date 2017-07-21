@@ -4,10 +4,10 @@ var symbols = ["/", "*", "-", "+"];
 
 function setNum(n) {
 
-		if (afterCalc) { 
-			temp = undefined;
-			afterCalc = false;
-		}
+    if (afterCalc) {
+        temp = undefined;
+        afterCalc = false;
+    }
 
     if (typeof(temp) === "undefined") {
         temp = n;
@@ -22,17 +22,17 @@ function setNum(n) {
 
 function setSymbol(s) {
 
-		afterCalc = false;
+    afterCalc = false;
 
     if (typeof(first) !== "undefined") {
         if (typeof(temp) !== "undefined") {
             second = Number(temp);
             getTotal();
-        		first = Number(temp);
-        		temp = undefined;
+            first = Number(temp);
+            temp = undefined;
         }
         symbol = s;
-        
+
     } else {
         if (typeof(temp) !== "undefined") {
             first = Number(temp);
@@ -45,10 +45,10 @@ function setSymbol(s) {
 
 function setDot() {
 
-		if (afterCalc) { 
-			temp = undefined;
-			afterCalc = false;
-		}
+    if (afterCalc) {
+        temp = undefined;
+        afterCalc = false;
+    }
 
     if (typeof(temp) === "undefined") {
         temp = "0";
@@ -61,19 +61,27 @@ function setDot() {
 function setPercent() {
     if (typeof(temp) !== "undefined") temp = div(temp, 100);
     if (typeof(temp) === "undefined" && typeof(first) !== undefined) {
-    	first = div(first, 100);
+        first = div(first, 100);
     }
 }
 
 function update() {
-
     var display = "";
     var result = "0";
 
+    var a = "";
+    var b = "";
+    var c = "";
+
     if (typeof(first) !== "undefined") {
-        display = first;
+        if (first.toString().length > 10) {
+            a = first.toPrecision(10);
+        } else {
+            a = first;
+        }
+        display = a;
         if (typeof(temp) === "undefined") {
-            result = first;
+            result = a;
         }
     }
     if (typeof(symbol) !== "undefined") {
@@ -95,20 +103,33 @@ function update() {
         display += " " + symbolString + " ";
     }
 
-    if (typeof(second) !== "undefined") display += second;
+    if (typeof(second) !== "undefined") {
+        if (second.toString().length > 10) {
+            b = second.toPrecision(10);
+        } else {
+            b = second;
+        }
+        display += b;
+    }
 
     if (typeof(temp) !== "undefined") {
-        display += temp;
-        result = temp;
+
+        if (temp.length > 10) {
+            c = Number(temp).toPrecision(10);
+        } else {
+            c = temp;
+        }
+        display += c;
+        result = c;
     }
 
     if (display === "") display = "0";
 
     console.log([
-        "first: " + first,
-        "second: " + second,
+        "first: " + a,
+        "second: " + b,
         "symbol: " + symbol,
-        "temp: " + temp
+        "temp: " + c
     ]);
     $(".calc-display").html(display);
     $(".calc-result").html(result);
@@ -155,12 +176,8 @@ function getTotal() {
                 break;
         }
 
-        if(result.toString().length > 12) {
-        	var a = result.toString().split(".")[1].length;
-        	result = result.toFixed(12 - (result.toString().length - a));
-        	console.log(result);
-        }
         temp = result.toString();
+
         first = symbol = second = undefined;
         afterCalc = true;
     }
