@@ -29,24 +29,20 @@ function setSymbol(s) {
     if (typeof(first) !== "undefined") {
         if (typeof(temp) !== "undefined") {
 
-            if (temp.length > 10) {
-                second = Number(temp).toPrecision(10);
-            } else {
-                second = Number(temp);
-            }
+            second = temp;
+
             getTotal();
-            first = Number(temp);
+
+            first = temp;
             temp = undefined;
         }
         symbol = s;
 
     } else {
+
         if (typeof(temp) !== "undefined") {
-            if (temp.length > 10) {
-                first = Number(temp).toPrecision(10);
-            } else {
-                first = Number(temp);
-            }
+
+            first = temp;
             temp = undefined;
             symbol = s;
         }
@@ -70,9 +66,11 @@ function setDot() {
 }
 
 function setPercent() {
-    if (typeof(temp) !== "undefined") temp = div(temp, 100);
+    if (typeof(temp) !== "undefined") {
+        temp = div(Number(temp), 100).toString();
+    }
     if (typeof(temp) === "undefined" && typeof(first) !== undefined) {
-        first = div(first, 100);
+        first = div(Number(first), 100).toString();
     }
 }
 
@@ -81,9 +79,19 @@ function update() {
     var result = "0";
 
     if (typeof(first) !== "undefined") {
-        display = first;
+
+    		var firstDisplay = "";
+
+    		if (first.length > 10) {
+    			firstDisplay = Number(first).toExponential();
+    		} else {
+        	firstDisplay = first;
+    		}
+
+    		display += firstDisplay;
+
         if (typeof(temp) === "undefined") {
-            result = first;
+            result = firstDisplay;
         }
     }
     if (typeof(symbol) !== "undefined") {
@@ -110,18 +118,27 @@ function update() {
     }
 
     if (typeof(temp) !== "undefined") {
-        display += temp;
-        result = temp;
+
+    		var tempDisplay = "";
+
+    		if(temp.length > 10) {
+					tempDisplay = Number(temp).toExponential();
+    		} else {
+        	tempDisplay = temp;
+    		}
+
+    		display += tempDisplay;
+    		result = tempDisplay;
     }
 
     if (display === "") display = "0";
 
-    console.log([
-        "first: " + first,
-        "second: " + second,
+    /*console.log([
+        "first: " + first + " " + typeof(first),
+        "second: " + second + " " + typeof(second),
         "symbol: " + symbol,
-        "temp: " + temp
-    ]);
+        "temp: " + temp + " " + typeof(temp)
+    ]);*/
     $(".calc-display").html(display);
     $(".calc-result").html(result);
 }
@@ -148,30 +165,26 @@ function getTotal() {
     var result = 0;
 
     if (typeof(first) !== "undefined" && typeof(second) === "undefined" && typeof(temp) !== "undefined") {
-        second = Number(temp);
+        second = temp;
     }
 
     if (typeof(second) !== "undefined") {
         switch (symbol) {
             case "/":
-                result = div(first, second);
+                result = div(Number(first), Number(second));
                 break;
             case "*":
-                result = mul(first, second);
+                result = mul(Number(first), Number(second));
                 break;
             case "-":
-                result = sub(first, second);
+                result = sub(Number(first), Number(second));
                 break;
             case "+":
-                result = add(first, second);
+                result = add(Number(first), Number(second));
                 break;
         }
 
-        if (result.toString().length > 10) {
-            temp = result.toPrecision(10).toString();
-        } else {
-            temp = result.toString();
-        }
+        temp = result.toString();
 
         first = symbol = second = undefined;
         afterCalc = true;
