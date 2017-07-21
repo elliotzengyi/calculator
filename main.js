@@ -155,6 +155,11 @@ function getTotal() {
                 break;
         }
 
+        if(result.toString().length > 12) {
+        	var a = result.toString().split(".")[1].length;
+        	result = result.toFixed(12 - (result.toString().length - a));
+        	console.log(result);
+        }
         temp = result.toString();
         first = symbol = second = undefined;
         afterCalc = true;
