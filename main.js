@@ -15,7 +15,7 @@ function setNum(n) {
         if (n === "0" && temp === "0") {
             temp = n;
         } else {
-            if (temp.length < 9) {
+            if (temp.length < 10) {
                 temp += n;
             }
         }
@@ -29,8 +29,8 @@ function setSymbol(s) {
     if (typeof(first) !== "undefined") {
         if (typeof(temp) !== "undefined") {
 
-            if (temp.length > 9) {
-                second = Number(temp).toPrecision(9);
+            if (temp.length > 10) {
+                second = Number(temp).toPrecision(10);
             } else {
                 second = Number(temp);
             }
@@ -42,8 +42,8 @@ function setSymbol(s) {
 
     } else {
         if (typeof(temp) !== "undefined") {
-            if (temp.length > 9) {
-                first = Number(temp).toPrecision(9);
+            if (temp.length > 10) {
+                first = Number(temp).toPrecision(10);
             } else {
                 first = Number(temp);
             }
@@ -167,8 +167,8 @@ function getTotal() {
                 break;
         }
 
-        if (result.toString().length > 9) {
-            temp = result.toPrecision(9).toString();
+        if (result.toString().length > 10) {
+            temp = result.toPrecision(10).toString();
         } else {
             temp = result.toString();
         }
