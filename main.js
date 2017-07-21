@@ -83,7 +83,7 @@ function update() {
     		var firstDisplay = "";
 
     		if (first.length > 10) {
-    			firstDisplay = Number(first).toExponential();
+    			firstDisplay = Number(first).toPrecision(10);
     		} else {
         	firstDisplay = first;
     		}
@@ -122,7 +122,7 @@ function update() {
     		var tempDisplay = "";
 
     		if(temp.length > 10) {
-					tempDisplay = Number(temp).toExponential();
+					tempDisplay = Number(temp).toPrecision(10);
     		} else {
         	tempDisplay = temp;
     		}
